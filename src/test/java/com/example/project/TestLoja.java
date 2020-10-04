@@ -252,7 +252,7 @@ public class TestLoja {
 
 	private void verificarCampoObrigatorio(String mensagemEsperada, Loja loja) {
 		try {
-			loja.dadosLoja();
+			loja.validarCamposObrigatorio();
 		} catch (RuntimeException e) {
 			assertEquals(mensagemEsperada, e.getMessage());
 		}

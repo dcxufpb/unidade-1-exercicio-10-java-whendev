@@ -111,6 +111,7 @@ public class Loja {
 
     public String dadosLoja() {
 		// Implemente aqui
+
         String _COMPLEMENTO = "";
         if (!isNullOrEmpty(this.getComplemento())){
             _COMPLEMENTO = " " + this.getComplemento();
