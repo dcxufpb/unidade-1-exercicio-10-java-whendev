@@ -79,9 +79,81 @@ public class Loja {
         return this.inscricaoEstadual;
     }
 
+    public static Boolean isNullOrEmpty(String s) {
+        return s == null || s.isEmpty();
+    }
+
+    public void validarCamposObrigatorio(){
+        if (isNullOrEmpty(this.getNomeLoja())){
+            throw new RuntimeException("O campo nome da loja é obrigatório");
+        }
+
+        if (isNullOrEmpty(this.getLogradouro())){
+            throw new RuntimeException("O campo logradouro do endereço é obrigatório");
+        }
+
+        if (isNullOrEmpty(this.getMunicipio())){
+            throw new RuntimeException("O campo município do endereço é obrigatório");
+        }
+
+        if (isNullOrEmpty(this.getEstado())){
+            throw new RuntimeException("O campo estado do endereço é obrigatório");
+        }
+
+        if (isNullOrEmpty(this.getCnpj())){
+            throw new RuntimeException("O campo cnpj da loja é obrigatório");
+        }
+
+        if (isNullOrEmpty(this.getInscricaoEstadual())) {
+            throw new RuntimeException("O campo inscrição estadual da loja é obrigatório");
+        }
+    }
+
     public String dadosLoja() {
 		// Implemente aqui
-		return null;
+        String _COMPLEMENTO = "";
+        if (!isNullOrEmpty(this.getComplemento())){
+            _COMPLEMENTO = " " + this.getComplemento();
+        }
+
+        String _BAIRRO = "";
+        if (!isNullOrEmpty(this.getBairro())) {
+            _BAIRRO = this.getBairro() + " - ";
+        }
+
+        String _CEP = "";
+        String _TELEFONE = "";
+
+        if (!isNullOrEmpty(this.getCep())) {
+            _CEP = "CEP:" + this.getCep();
+            if (!isNullOrEmpty(this.getTelefone())){
+                _TELEFONE = " Tel " + this.getTelefone();
+            }
+        } else {
+            _CEP = "";
+            if (!isNullOrEmpty(this.getTelefone())){
+                _TELEFONE = "Tel " + this.getTelefone();
+            }
+        }
+
+        String _OBSERVACAO = "";
+        if (!isNullOrEmpty(this.getObservacao())){
+            _OBSERVACAO = this.getObservacao();
+        }
+
+        String _texto = "";
+        _texto = String.format("%s\r\n",this.getNomeLoja());
+        if (this.getNumero() == 0){
+            _texto += String.format("%s, %s%s\r\n",this.getLogradouro(),"s/n",_COMPLEMENTO);
+        } else {
+            _texto += String.format("%s, %d%s\r\n",this.getLogradouro(),this.getNumero(),_COMPLEMENTO);
+        }
+        _texto += String.format("%s%s - %s\r\n",_BAIRRO,this.getMunicipio(),this.getEstado());
+        _texto += String.format("%s%s\r\n",_CEP,_TELEFONE);
+        _texto += String.format("%s\r\n",_OBSERVACAO);
+        _texto += String.format("CNPJ: %s\r\n",this.getCnpj());
+        _texto += String.format("IE: %s\r\n",this.getInscricaoEstadual());
+        return _texto;
 	}
 
 }
